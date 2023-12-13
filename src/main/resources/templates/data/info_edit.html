@@ -1,0 +1,113 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header::public_header">
+    <meta charset="UTF-8">
+    <title>数据编辑页面</title>
+</head>
+<body>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">首页</a>
+            </li>
+            <li >
+                <a href="/admin/data/info/list/1">数据填报</a>
+            </li>
+            <li class="active">
+                <strong>编辑</strong>
+            </li>
+        </ol>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+
+            <!--表单容器-->
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <div th:include="common/upload_template::upload_template"
+                             th:with="uploadType='image', uploadKey='bt', uploadInfoId=${bean.id}"></div>
+
+                        <form method="post" action="/admin/data/info">
+                            <input type="hidden" th:value="${bean.id}" name="id">
+
+                            <div id="dropzone_area"></div>
+
+                            <div class="form-group">
+                                <label for="bean_title">标题</label><input type="text" class="form-control" id="bean_title" name="title" th:value="${bean.title}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="bean_memo">说明</label><input type="text" class="form-control" id="bean_memo" name="memo" th:value="${bean.memo}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bean_memo">标签</label><input type="text" class="form-control" id="bean_tags" name="tags" th:value="${bean.tags}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bean_memo">所属栏目</label>
+                                <select class="form-control"  id="bean_type" name="type" >
+                                    <option  th:each="temp:${categories}" th:selected="${bean.type == temp.id}"
+                                             th:value="${temp.id}" th:text="${temp.name}"></option>
+
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>内容</label>
+                                <div id="bean_content" th:utext="${bean.content}" ></div>
+                            </div>
+
+                            <textarea id="bean_content_val" name="content" style="display: none;" th:text="${bean.content}"></textarea>
+
+
+
+                           <button type="submit" class="btn btn-success">提交</button>
+                            <a class="btn btn-info" href="/admin/data/info/list/1">返回</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--表单容器结束-->
+
+        </div>
+    </div>
+</div>
+
+
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+<link href="https://cdn.bootcss.com/summernote/0.8.7/summernote.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/summernote/0.8.7/summernote.min.js"></script>
+<script src="https://cdn.bootcss.com/summernote/0.8.7/lang/summernote-zh-CN.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#bean_content').summernote({
+            height: 300,
+            lang: 'zh-CN',
+            callbacks: {
+                onBlur: function() {
+                    $("#bean_content_val").html($('#bean_content').summernote('code'))
+                },
+                onImageUpload: function(files, editor, welEditable) {
+                    for (var i = files.length - 1; i >= 0; i--) {
+                        sendFile(files[i], this);
+                    }
+                }
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>

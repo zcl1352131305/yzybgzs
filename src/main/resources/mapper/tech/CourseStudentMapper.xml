@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.softvan.mapper.tech.CourseStudentMapper">
+  <resultMap id="BaseResultMap" type="cn.com.softvan.entity.tech.CourseStudent">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="course_id" jdbcType="VARCHAR" property="courseId" />
+    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+  </resultMap>
+
+  <delete id="deleteByCourseId" parameterType="java.lang.Integer">
+    delete from t_course_student where course_id = #{courseId}
+  </delete>
+
+  <select id="selectCourseStudent" parameterType="java.lang.Integer" resultType="cn.com.softvan.entity.system.SystemUser">
+    select t1.* from t_system_user t1
+    INNER JOIN t_course_student t2 on t1.id = t2.student_id
+    where t2.course_id = #{courseId}
+  </select>
+
+</mapper>

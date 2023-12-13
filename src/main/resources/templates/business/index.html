@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+	<head th:include="common/header::public_header">
+		<meta charset="utf-8" />
+		<title>邮政管理辅助系统</title>
+
+	</head>
+
+	<body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden;">
+		<div id="wrapper">
+			<!--左侧导航开始-->
+			<nav class="navbar-default navbar-static-side" role="navigation">
+				<div class="nav-close"><i class="fa fa-times-circle"></i></div>
+				<div class="sidebar-collapse">
+					<ul class="nav" id="side-menu">
+						<li class="nav-header">
+							<div class="dropdown profile-element">
+								<span><img alt="image" class="img-circle" src="img/profile_small.jpg" /></span>
+								<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+									<span class="clear">
+										<span class="block m-t-xs"><strong class="font-bold">Beaut-ruoyi</strong></span>
+										<span class="text-muted text-xs block">行管科业务辅助系统</span>
+									</span>
+								</a>
+
+							</div>
+							<div class="logo-element">H+</div>
+						</li>
+						<li>
+							<a class="J_menuItem" href="index_v1.html" data-index="0"> <i class="fa fa-home"></i> <span class="nav-label">主页</span></a>
+						</li>
+						<li>
+							<a class="J_menuItem" href="layouts.html"><i class="fa fa-columns"></i> <span class="nav-label">检查表管理</span></a>
+						</li>
+						<li>
+							<a class="J_menuItem" href="layouts.html"><i class="fa fa-columns"></i> <span class="nav-label">案件管理</span></a>
+						</li>
+						<li>
+							<a class="J_menuItem" href="layouts.html"><i class="fa fa-columns"></i> <span class="nav-label">当处管理</span></a>
+						</li>
+						<li>
+							<a class="J_menuItem" href="layouts.html"><i class="fa fa-columns"></i> <span class="nav-label">责改管理</span></a>
+						</li>
+						<li>
+							<a class="J_menuItem" href="layouts.html"><i class="fa fa-columns"></i> <span class="nav-label">约谈管理</span></a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!--左侧导航结束-->
+			<!--右侧部分开始-->
+			<div id="page-wrapper" class="gray-bg dashbard-1">
+				<div class="row border-bottom">
+					<nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0;">
+						<div class="navbar-header">
+							<a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
+						</div>
+						<ul class="nav navbar-top-links navbar-right">
+
+							<li class="dropdown hidden-xs">
+								<a class="right-sidebar-toggle" aria-expanded="false"> <i class="fa fa-tasks"></i> 主题 </a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+				<div class="row content-tabs">
+					<button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i></button>
+					<nav class="page-tabs J_menuTabs">
+						<div class="page-tabs-content">
+							<a href="javascript:;" class="active J_menuTab" data-id="index_v1.html">首页</a>
+						</div>
+					</nav>
+					<button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i></button>
+					<div class="btn-group roll-nav roll-right">
+						<button class="dropdown" data-toggle="dropdown">页签操作<span class="caret"></span></button>
+						<ul role="menu" class="dropdown-menu dropdown-menu-right">
+							<li class="tabCloseCurrent"><a>关闭当前</a></li>
+							<li class="J_tabCloseOther"><a>关闭其他</a></li>
+							<li class="J_tabCloseAll"><a>全部关闭</a></li>
+						</ul>
+					</div>
+					<a href="#" class="roll-nav roll-right tabReload"><i class="fa fa-refresh"></i> 刷新</a>
+				</div>
+				<div class="row J_mainContent" id="content-main">
+					<div class="gray-bg">
+						<div class="wrapper wrapper-content animated fadeIn">
+							<div class="row">
+								<div class="col-md-8">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<h5>检查表情况&nbsp;&nbsp;最近更新日期：2023年12月30日（已有10天未更新数据）</h5>
+
+										</div>
+										<div class="ibox-content">
+											<div class="row">
+												<div class="col-md-2 padding-5">
+													<div class="panel panel-primary">
+														<div class="panel-heading "><h2 class="font-bold no-margins">1月&nbsp;&nbsp;<small style="color: #fff">总数：30</small></h2></div>
+														<div class="panel-body navy-bg vertical-align yz-fontsize-15" style="padding: 0 10px">
+															<p class="no-margins">异常：0</p>
+															<small class="no-margins yz-fontsize-10">不差表</small>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 padding-5">
+													<div class="panel panel-danger">
+														<div class="panel-heading "><h2 class="font-bold no-margins">2月&nbsp;&nbsp;<small style="color: #fff">总数：20</small></h2></div>
+														<div class="panel-body red-bg vertical-align yz-fontsize-15" style="padding: 0 10px">
+															<p class="no-margins">异常:20</p>
+															<small class="no-margins yz-fontsize-10">法人差3&nbsp;&nbsp;分支差2&nbsp;&nbsp;末端差1</small><br>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 padding-5">
+													<div class="panel panel-warning">
+														<div class="panel-heading "><h2 class="font-bold no-margins">3月&nbsp;&nbsp;<small style="color: #fff">总数：20</small></h2></div>
+														<div class="panel-body yellow-bg vertical-align yz-fontsize-15" style="padding: 0 10px">
+															<p class="no-margins">无异常</p>
+															<small class="no-margins yz-fontsize-10">法人差3&nbsp;&nbsp;分支差2&nbsp;&nbsp;末端差1</small><br>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 padding-5">
+													<div class="panel panel-gray">
+														<div class="panel-heading "><h2 class="font-bold no-margins">4月<small>（未开始）</small></h2></div>
+														<div class="panel-body gray-bg1 vertical-align yz-fontsize-15" style="padding: 0 10px">
+															<p class="no-margins">无数据</p>
+															<br>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 padding-5">
+													<div class="panel panel-gray">
+														<div class="panel-heading "><h2 class="font-bold no-margins">4月<small>（未开始）</small></h2></div>
+														<div class="panel-body gray-bg1 vertical-align yz-fontsize-15" style="padding: 0 10px">
+															<p class="no-margins">无数据</p>
+															<br>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 padding-5">
+													<div class="panel panel-gray">
+														<div class="panel-heading "><h2 class="font-bold no-margins">4月<small>（未开始）</small></h2></div>
+														<div class="panel-body gray-bg1 vertical-align yz-fontsize-15" style="padding: 0 10px">
+															<p class="no-margins">无数据</p>
+															<br>
+														</div>
+													</div>
+												</div>
+
+
+											</div>
+											<div class="row">
+												<div class="col-md-2 padding-5">
+													<div class="panel panel-gray">
+														<div class="panel-heading "><h2 class="font-bold no-margins">4月<small>（未开始）</small></h2></div>
+														<div class="panel-body gray-bg1 vertical-align yz-fontsize-15" style="padding: 0 10px">
+															<p class="no-margins">无数据</p>
+															<br>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 padding-5">
+													<div class="panel panel-gray">
+														<div class="panel-heading "><h2 class="font-bold no-margins">4月<small>（未开始）</small></h2></div>
+														<div class="panel-body gray-bg1 vertical-align yz-fontsize-15" style="padding: 0 10px">
+															<p class="no-margins">无数据</p>
+															<br>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 padding-5">
+													<div class="panel panel-gray">
+														<div class="panel-heading "><h2 class="font-bold no-margins">4月<small>（未开始）</small></h2></div>
+														<div class="panel-body gray-bg1 vertical-align yz-fontsize-15" style="padding: 0 10px">
+															<p class="no-margins">无数据</p>
+															<br>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 padding-5">
+													<div class="panel panel-gray">
+														<div class="panel-heading "><h2 class="font-bold no-margins">4月<small>（未开始）</small></h2></div>
+														<div class="panel-body gray-bg1 vertical-align yz-fontsize-15" style="padding: 0 10px">
+															<p class="no-margins">无数据</p>
+															<br>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 padding-5">
+													<div class="panel panel-gray">
+														<div class="panel-heading "><h2 class="font-bold no-margins">4月<small>（未开始）</small></h2></div>
+														<div class="panel-body gray-bg1 vertical-align yz-fontsize-15" style="padding: 0 10px">
+															<p class="no-margins">无数据</p>
+															<br>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 padding-5">
+													<div class="panel panel-gray">
+														<div class="panel-heading "><h2 class="font-bold no-margins">4月<small>（未开始）</small></h2></div>
+														<div class="panel-body gray-bg1 vertical-align yz-fontsize-15" style="padding: 0 10px">
+															<p class="no-margins">无数据</p>
+															<br>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<h5>执法建议 <small class="m-l-sm">执法检查推荐</small></h5>
+
+										</div>
+										<div class="ibox-content">
+											<h2>
+												Bootstrap<br/>
+											</h2>
+											<p>
+												简洁、直观、强悍的前端开发框架，让web开发更迅速、简单。</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="tabs-container">
+										<ul class="nav nav-tabs">
+											<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> 第一个选项卡</a>
+											</li>
+											<li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">第二个选项卡</a>
+											</li>
+										</ul>
+										<div class="tab-content">
+											<div id="tab-1" class="tab-pane active">
+												<div class="panel-body">
+													<strong>HTML5 文档类型</strong>
+													<p>Bootstrap 使用到的某些 HTML 元素和 CSS 属性需要将页面设置为 HTML5 文档类型。在你项目中的每个页面都要参照下面的格式进行设置。</p>
+												</div>
+											</div>
+											<div id="tab-2" class="tab-pane">
+												<div class="panel-body">
+													<strong>移动设备优先</strong>
+													<p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在 Bootstrap 3 中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增加一些可选的针对移动设备的样式，而是直接融合进了框架的内核中。也就是说，Bootstrap 是移动设备优先的。针对移动设备的样式融合进了框架的每个角落，而不是增加一个额外的文件。</p>
+												</div>
+											</div>
+										</div>
+
+
+									</div>
+								</div>
+
+								<div class="col-sm-6">
+									<div class="panel blank-panel">
+
+										<div class="panel-heading">
+											<div class="panel-title m-b-md">
+												<h4>图标选项卡</h4>
+											</div>
+											<div class="panel-options">
+
+												<ul class="nav nav-tabs">
+													<li class="active"><a data-toggle="tab" href="tabs_panels.html#tab-4"><i class="fa fa-laptop"></i></a>
+													</li>
+													<li class=""><a data-toggle="tab" href="tabs_panels.html#tab-5"><i class="fa fa-desktop"></i></a>
+													</li>
+													<li class=""><a data-toggle="tab" href="tabs_panels.html#tab-6"><i class="fa fa-signal"></i></a>
+													</li>
+													<li class=""><a data-toggle="tab" href="tabs_panels.html#tab-7"><i class="fa fa-bar-chart-o"></i></a>
+													</li>
+												</ul>
+											</div>
+										</div>
+
+										<div class="panel-body">
+											<div class="tab-content">
+												<div id="tab-4" class="tab-pane active">
+													<strong>排版与链接</strong>
+
+													<p>Bootstrap 排版、链接样式设置了基本的全局样式。分别是： 为 body 元素设置 background-color: #fff; 使用 @font-family-base、@font-size-base 和 @line-height-base a变量作为排版的基本参数 为所有链接设置了基本颜色 @link-color ，并且当链接处于 :hover 状态时才添加下划线 这些样式都能在 scaffolding.less 文件中找到对应的源码。</p>
+												</div>
+
+												<div id="tab-5" class="tab-pane">
+													<strong>Normalize.css</strong>
+
+													<p>为了增强跨浏览器表现的一致性，我们使用了 Normalize.css，这是由 Nicolas Gallagher 和 Jonathan Neal 维护的一个CSS 重置样式库。</p>
+												</div>
+												<div id="tab-6" class="tab-pane">
+													<strong>布局容器</strong>
+
+													<p>Bootstrap 需要为页面内容和栅格系统包裹一个 .container 容器。我们提供了两个作此用处的类。注意，由于 padding 等属性的原因，这两种 容器类不能互相嵌套。</p>
+												</div>
+												<div id="tab-7" class="tab-pane">
+													<strong>栅格系统</strong>
+
+													<p>Bootstrap 提供了一套响应式、移动设备优先的流式栅格系统，随着屏幕或视口（viewport）尺寸的增加，系统会自动分为最多12列。它包含了易于使用的预定义类，还有强大的mixin 用于生成更具语义的布局。</p>
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="row m-b-lg">
+								<div class="col-sm-6">
+									<div class="tabs-container">
+
+										<div class="tabs-left">
+											<ul class="nav nav-tabs">
+												<li class="active"><a data-toggle="tab" href="#tab-8"> 第一个选项卡</a>
+												</li>
+												<li class=""><a data-toggle="tab" href="#tab-9"> 第二个选项卡</a>
+												</li>
+											</ul>
+											<div class="tab-content ">
+												<div id="tab-8" class="tab-pane active">
+													<div class="panel-body">
+														<strong>排版与链接</strong>
+
+														<p>Bootstrap 排版、链接样式设置了基本的全局样式。分别是： 为 body 元素设置 background-color: #fff; 使用 @font-family-base、@font-size-base 和 @line-height-base a变量作为排版的基本参数 为所有链接设置了基本颜色 @link-color ，并且当链接处于 :hover 状态时才添加下划线 这些样式都能在 scaffolding.less 文件中找到对应的源码。</p>
+													</div>
+												</div>
+												<div id="tab-9" class="tab-pane">
+													<div class="panel-body">
+														<strong>栅格系统</strong>
+
+														<p>Bootstrap 提供了一套响应式、移动设备优先的流式栅格系统，随着屏幕或视口（viewport）尺寸的增加，系统会自动分为最多12列。它包含了易于使用的预定义类，还有强大的mixin 用于生成更具语义的布局。</p>
+													</div>
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="tabs-container">
+										<div class="tabs-right">
+											<ul class="nav nav-tabs">
+												<li class="active"><a data-toggle="tab" href="#tab-10">第一个选项卡</a>
+												</li>
+												<li class=""><a data-toggle="tab" href="#tab-11"> 第二个选项卡</a>
+												</li>
+											</ul>
+											<div class="tab-content ">
+												<div id="tab-10" class="tab-pane active">
+													<div class="panel-body">
+														<strong>排版与链接</strong>
+
+														<p>Bootstrap 排版、链接样式设置了基本的全局样式。分别是： 为 body 元素设置 background-color: #fff; 使用 @font-family-base、@font-size-base 和 @line-height-base a变量作为排版的基本参数 为所有链接设置了基本颜色 @link-color ，并且当链接处于 :hover 状态时才添加下划线 这些样式都能在 scaffolding.less 文件中找到对应的源码。</p>
+													</div>
+												</div>
+												<div id="tab-11" class="tab-pane">
+													<div class="panel-body">
+														<strong>栅格系统</strong>
+
+														<p>Bootstrap 提供了一套响应式、移动设备优先的流式栅格系统，随着屏幕或视口（viewport）尺寸的增加，系统会自动分为最多12列。它包含了易于使用的预定义类，还有强大的mixin 用于生成更具语义的布局。</p>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="ibox">
+										<div class="ibox-title">
+											<h5>Bootstrap面板 <small>自定义背景</small></h5>
+										</div>
+										<div class="ibox-content">
+
+											<div class="row">
+												<div class="col-sm-4">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															默认面板
+														</div>
+														<div class="panel-body">
+															<p>通过 .panel-heading 可以很简单地为面板加入一个标题容器。你也可以通过添加设置了 .panel-title 类的标签，添加一个预定义样式的标题。 为了给链接设置合适的颜色，务必将链接放到带有 .panel-title 类的标题标签内。</p>
+														</div>
+
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="panel panel-primary">
+														<div class="panel-heading">
+															主要
+														</div>
+														<div class="panel-body">
+															<p>通过 .panel-heading 可以很简单地为面板加入一个标题容器。你也可以通过添加设置了 .panel-title 类的标签，添加一个预定义样式的标题。 为了给链接设置合适的颜色，务必将链接放到带有 .panel-title 类的标题标签内。</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="panel panel-success">
+														<div class="panel-heading">
+															成功
+														</div>
+														<div class="panel-body">
+															<p>通过 .panel-heading 可以很简单地为面板加入一个标题容器。你也可以通过添加设置了 .panel-title 类的标签，添加一个预定义样式的标题。 为了给链接设置合适的颜色，务必将链接放到带有 .panel-title 类的标题标签内。</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4">
+													<div class="panel panel-info">
+														<div class="panel-heading">
+															<i class="fa fa-info-circle"></i> 信息
+														</div>
+														<div class="panel-body">
+															<p>通过 .panel-heading 可以很简单地为面板加入一个标题容器。你也可以通过添加设置了 .panel-title 类的标签，添加一个预定义样式的标题。 为了给链接设置合适的颜色，务必将链接放到带有 .panel-title 类的标题标签内。</p>
+														</div>
+
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="panel panel-warning">
+														<div class="panel-heading">
+															<i class="fa fa-warning"></i> 警告
+														</div>
+														<div class="panel-body">
+															<p>通过 .panel-heading 可以很简单地为面板加入一个标题容器。你也可以通过添加设置了 .panel-title 类的标签，添加一个预定义样式的标题。 为了给链接设置合适的颜色，务必将链接放到带有 .panel-title 类的标题标签内。</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="panel panel-danger">
+														<div class="panel-heading">
+															危险
+														</div>
+														<div class="panel-body">
+															<p>通过 .panel-heading 可以很简单地为面板加入一个标题容器。你也可以通过添加设置了 .panel-title 类的标签，添加一个预定义样式的标题。 为了给链接设置合适的颜色，务必将链接放到带有 .panel-title 类的标题标签内。</p>
+														</div>
+														<div class="panel-footer">
+															面板Footer
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<h5>折叠面板</h5>
+											<div class="ibox-tools">
+												<a class="collapse-link">
+													<i class="fa fa-chevron-up"></i>
+												</a>
+												<a class="dropdown-toggle" data-toggle="dropdown" href="tabs_panels.html#">
+													<i class="fa fa-wrench"></i>
+												</a>
+												<ul class="dropdown-menu dropdown-user">
+													<li><a href="tabs_panels.html#">选项1</a>
+													</li>
+													<li><a href="tabs_panels.html#">选项2</a>
+													</li>
+												</ul>
+												<a class="close-link">
+													<i class="fa fa-times"></i>
+												</a>
+											</div>
+										</div>
+										<div class="ibox-content">
+											<div class="panel-body">
+												<div class="panel-group" id="accordion">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h5 class="panel-title">
+																<a data-toggle="collapse" data-parent="#accordion" href="tabs_panels.html#collapseOne">标题 #1</a>
+															</h5>
+														</div>
+														<div id="collapseOne" class="panel-collapse collapse in">
+															<div class="panel-body">
+																Bootstrap相关优质项目推荐 这些项目或者是对Bootstrap进行了有益的补充，或者是基于Bootstrap开发的
+															</div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h4 class="panel-title">
+																<a data-toggle="collapse" data-parent="#accordion" href="tabs_panels.html#collapseTwo">标题 #2</a>
+															</h4>
+														</div>
+														<div id="collapseTwo" class="panel-collapse collapse">
+															<div class="panel-body">
+																Bootstrap相关优质项目推荐 这些项目或者是对Bootstrap进行了有益的补充，或者是基于Bootstrap开发的
+															</div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h4 class="panel-title">
+																<a data-toggle="collapse" data-parent="#accordion" href="tabs_panels.html#collapseThree">标题 #3</a>
+															</h4>
+														</div>
+														<div id="collapseThree" class="panel-collapse collapse">
+															<div class="panel-body">
+																Bootstrap相关优质项目推荐 这些项目或者是对Bootstrap进行了有益的补充，或者是基于Bootstrap开发的
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="jumbotron">
+										<h1>超大屏幕</h1>
+										<p>Bootstrap 支持的另一个特性，超大屏幕（Jumbotron）。顾名思义该组件可以增加标题的大小，并为登陆页面内容添加更多的外边距（margin）。使用超大屏幕（Jumbotron）的步骤如下：</p>
+										<div class="alert alert-warning">
+											<ol>
+												<li>创建一个带有 class .jumbotron. 的容器</li>
+												<li>除了更大的 &lt;h1&gt;，字体粗细 font-weight 被减为 200px。</li>
+											</ol>
+										</div>
+
+
+										<p><a role="button" class="btn btn-primary btn-lg">了解更多</a>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="footer">
+					<div class="pull-right">&copy; 2014-2015 <a href="http://www.ruoyi.vip/" target="_blank">ruoyi</a></div>
+				</div>
+			</div>
+			<!--右侧部分结束-->
+			<!--右侧边栏开始-->
+			<div id="right-sidebar">
+				<div class="sidebar-container">
+					<ul class="nav nav-tabs navs-3">
+						<li class="active">
+							<a data-toggle="tab" href="#tab-1"> <i class="fa fa-gear"></i> 主题 </a>
+						</li>
+					</ul>
+
+					<div class="tab-content">
+						<div id="tab-theme" class="tab-pane active">
+							<div class="sidebar-title">
+								<h3><i class="fa fa-comments-o"></i> 主题设置</h3>
+								<small><i class="fa fa-tim"></i> 你可以从这里选择和预览主题的布局和样式，这些设置会被保存在本地，下次打开的时候会直接应用这些设置。</small>
+							</div>
+							<div class="skin-setttings">
+								<div class="title">主题设置</div>
+								<div class="setings-item">
+									<span>收起左侧菜单</span>
+									<div class="switch">
+										<div class="onoffswitch">
+											<input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu" />
+											<label class="onoffswitch-label" for="collapsemenu">
+												<span class="onoffswitch-inner"></span>
+												<span class="onoffswitch-switch"></span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="setings-item">
+									<span>固定顶部</span>
+
+									<div class="switch">
+										<div class="onoffswitch">
+											<input type="checkbox" name="fixednavbar" class="onoffswitch-checkbox" id="fixednavbar" />
+											<label class="onoffswitch-label" for="fixednavbar">
+												<span class="onoffswitch-inner"></span>
+												<span class="onoffswitch-switch"></span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="setings-item">
+									<span>
+										固定宽度
+									</span>
+
+									<div class="switch">
+										<div class="onoffswitch">
+											<input type="checkbox" name="boxedlayout" class="onoffswitch-checkbox" id="boxedlayout" />
+											<label class="onoffswitch-label" for="boxedlayout">
+												<span class="onoffswitch-inner"></span>
+												<span class="onoffswitch-switch"></span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="title">皮肤选择</div>
+								<div class="setings-item default-skin nb">
+									<span class="skin-name">
+										<a href="#" class="s-skin-0">
+											默认皮肤
+										</a>
+									</span>
+								</div>
+								<div class="setings-item blue-skin nb">
+									<span class="skin-name">
+										<a href="#" class="s-skin-1">
+											蓝色主题
+										</a>
+									</span>
+								</div>
+								<div class="setings-item yellow-skin nb">
+									<span class="skin-name">
+										<a href="#" class="s-skin-3">
+											黄色/紫色主题
+										</a>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--右侧边栏结束-->
+
+		</div>
+
+		<!-- 全局js -->
+		<script src="/static/js/jquery.min.js"></script>
+		<script src="/static/js/bootstrap.min.js"></script>
+		<script src="/static/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+		<script src="/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+		<script src="/static/js/plugins/contextMenu/jquery.contextMenu.min.js"></script>
+		<script src="/static/js/plugins/layer/layer.min.js"></script>
+
+		<!-- 自定义js -->
+		<script src="/static/js/hplus.js?v=4.1.0"></script>
+		<script type="text/javascript" src="/static/js/contabs.js"></script>
+
+		<!-- 第三方插件 -->
+		<script src="/static/js/plugins/pace/pace.min.js"></script>
+
+
+	</body>
+</html>

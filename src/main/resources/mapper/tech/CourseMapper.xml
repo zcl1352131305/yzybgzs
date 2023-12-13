@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.softvan.mapper.tech.CourseMapper">
+  <resultMap id="BaseResultMap" type="cn.com.softvan.entity.tech.Course">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="teacher_id" jdbcType="VARCHAR" property="teacherId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="score" jdbcType="VARCHAR" property="score" />
+    <result column="detail_info" jdbcType="VARCHAR" property="detailInfo" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="clazz" jdbcType="VARCHAR" property="clazz" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+  </resultMap>
+
+
+  <select id="selectStudentCourses" resultType="cn.com.softvan.entity.tech.Course" parameterType="java.lang.Integer">
+    select t1.*,t3.nickname as teacherName,t1.detail_info as detailInfo from t_course t1
+    LEFT JOIN t_system_user t3 on t1.teacher_id = t3.id
+    INNER JOIN t_course_student t2 on t1.id = t2.course_id
+    where t2.student_id = #{studentId}
+  </select>
+</mapper>

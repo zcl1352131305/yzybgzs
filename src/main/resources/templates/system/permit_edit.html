@@ -1,0 +1,117 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header::public_header">
+    <meta charset="UTF-8">
+    <title>数据编辑页面</title>
+</head>
+<body>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">首页</a>
+            </li>
+            <li>
+                <a href="/admin/system/permit/list/1">权限配置</a>
+            </li>
+            <li class="active">
+                <strong>编辑</strong>
+            </li>
+        </ol>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+
+            <!--表单容器-->
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+
+                        <form th:method="${bean.id == null?'post':'put'}" action="/admin/system/permit">
+                            <input type="hidden" th:value="${bean.id}" name="id">
+
+                            <div id="dropzone_area"></div>
+
+                            <div class="form-group">
+                                <label for="bean_name">名称</label><input type="text" class="form-control" id="bean_name"
+                                                                        name="name" th:value="${bean.name}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bean_type">类型</label>
+                                <select class="form-control" name="type" id="bean_type">
+                                    <option value="menu" th:selected="${bean.type == 'menu'}">菜单</option>
+                                    <option value="button" th:selected="${bean.type == 'button'}">按钮</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bean_permission">权限字符串</label><input type="text" class="form-control"
+                                                                                 id="bean_permission" name="permission"
+                                                                                 th:value="${bean.permission}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bean_url">地址</label><input type="text" class="form-control" id="bean_url"
+                                                                       name="url" th:value="${bean.url}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bean_parentId">父级id</label>
+                                <select class="form-control" id="bean_parentId"  name="parentId">
+                                    <option value="0">顶级</option>
+                                    <option th:each="variable:${permits}" th:if="${variable.id != bean.id}"
+                                            th:value="${variable.id}" th:text="${variable.name}"
+                                            th:selected="${variable.id == bean.parentId}"></option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="bean_available">是否可用</label>
+                                <select class="form-control" name="available" id="bean_available">
+                                    <option value="1" th:selected="${bean.available == '1'}">是</option>
+                                    <option value="0" th:selected="${bean.available == '0'}">否</option>
+                                </select>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-success">提交</button>
+                            <a class="btn btn-info" href="/admin/system/permit/list/1">返回</a>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--表单容器结束-->
+
+        </div>
+    </div>
+</div>
+
+
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+<link href="https://cdn.bootcss.com/select2/4.0.6-rc.1/css/select2.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/select2/4.0.6-rc.1/js/select2.full.min.js"></script>
+<script src="https://cdn.bootcss.com/select2/4.0.6-rc.1/js/i18n/zh-CN.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //初始化select2
+        $('#bean_parentId').select2({
+            width: '100%'
+        });
+    });
+
+</script>
+</body>
+</html>

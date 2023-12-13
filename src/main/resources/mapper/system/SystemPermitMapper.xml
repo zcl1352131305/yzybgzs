@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.softvan.mapper.system.SystemPermitMapper">
+  <resultMap id="BaseResultMap" type="cn.com.softvan.entity.system.SystemPermit">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="parentId" jdbcType="INTEGER" property="parentId" />
+    <result column="parentIds" jdbcType="VARCHAR" property="parentIds" />
+    <result column="available" jdbcType="BIT" property="available" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+  </resultMap>
+  
+  <select id="findPermitByRoleIds" parameterType="java.util.List" resultMap="BaseResultMap">
+    SELECT DISTINCT
+    t1.*
+    FROM
+    t_system_permit t1
+    LEFT JOIN t_system_role_permit t2 ON t1.id = t2.permit_id
+    WHERE
+    t2.role_id IN
+    <foreach item="rId" collection="list" separator="," open="(" close=")">
+      #{rId}
+    </foreach>
+
+  </select>
+
+
+  <select id="findPermitByRoleId"  parameterType="java.lang.String" resultMap="BaseResultMap" >
+    select
+    t1.*
+    from  t_system_permit t1, t_system_role_permit t2
+    where t1.id = t2.permit_id
+    and t2.role_id = #{roleId}
+  </select>
+</mapper>

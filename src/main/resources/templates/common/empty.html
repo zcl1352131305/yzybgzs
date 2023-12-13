@@ -1,0 +1,44 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header::public_header">
+    <meta charset="UTF-8">
+    <title>页面模板</title>
+</head>
+<body>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">这是</a>
+            </li>
+            <li class="active">
+                <strong>包屑式导航</strong>
+            </li>
+        </ol>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+            <div>
+                <button class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;新增</button>
+                <p></p>
+            </div>
+           <!--table-->
+
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="audit_hidden_message" th:value="${msg}">
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+
+</body>
+</html>

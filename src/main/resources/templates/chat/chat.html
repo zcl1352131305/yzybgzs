@@ -1,0 +1,356 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>页面模板</title>
+    <div th:include="common/header::public_header"></div>
+    <style>
+        .chat-discussion{
+            height: 65vh;
+        }
+        .nav-tabs{
+            margin-left: -30px;
+        }
+        .chat-users {
+            overflow-y: auto;
+            height: calc(65vh + 50px);
+        }
+        .nav-tabs > li > a {
+            color: #A7B1C2;
+            font-weight: 600;
+            padding: 0 20px;
+            height: 40px;
+            line-height: 40px;
+        }
+        .message{
+            max-width: 60%;
+        }
+        .chat-discussion .chat-message.message-right .message-content{
+            text-align: left;
+        }
+        .chat-discussion .chat-message.message-right .message-author{
+            text-align: right;
+        }
+        .message-input{
+            resize: none;
+        }
+        .message-sendBtn{
+            position: absolute;
+            right: 18px;
+            bottom: 3px;
+        }
+        .img-circle{
+            background: #1ab394;
+            width: 40px;
+            height: 40px;
+            padding: 4px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">首页</a>
+            </li>
+            <li class="active">
+                <strong>我的课程</strong>
+            </li>
+        </ol>
+
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="ibox chat-view">
+
+            <div class="ibox-title" id="chatWith">
+                聊天窗口
+            </div>
+
+
+            <div class="ibox-content">
+
+                <div class="row">
+
+                    <div class="col-md-9 ">
+                        <div class="chat-discussion" id="chat-messages">
+
+                            <!--<div class="chat-message message-left">
+                                <img class="message-avatar" src="/static/img/profile_small.jpg" alt="">
+                                <div class="message">
+                                    <a class="message-author" href="#"> 颜文字君</a>
+                                    <span class="message-date"> 2015-02-02 18:39:23 </span>
+                                    <span class="message-content">
+											H+ 是个好框架
+                                            </span>
+                                </div>
+                            </div>-->
+
+
+                        </div>
+                        <div class="chat-message-form">
+                            <div class="form-group">
+                                <textarea class="form-control message-input" id="message" placeholder="输入消息内容"></textarea>
+                                <button type="button" class="btn btn-primary message-sendBtn" onclick="sendChatMessage()">发送消息</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="height: 70vh;">
+
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> 学生</a>
+                            </li>
+                            <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-graduation-cap"></i> 教师</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="chat-users">
+                                    <div class="users-list" id="students">
+                                        <!--<div class="chat-user">
+                                            <img class="chat-avatar" src="/static/img/profile_small.jpg" alt="">
+                                            <div class="chat-user-name">
+                                                <a href="#">伤城Simple</a>
+                                            </div>
+                                        </div>-->
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="tab-2" class="tab-pane">
+                                <div class="chat-users">
+                                    <div class="users-list" id="teachers">
+                                        <!--<div class="chat-user">
+                                            <img class="chat-avatar" src="/static/img/profile_small.jpg" alt="">
+                                            <div class="chat-user-name">
+                                                <a href="#">伤城Simple</a>
+                                            </div>
+                                        </div>-->
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<input type="hidden" id="audit_hidden_message" th:value="${msg}">
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+
+</body>
+
+<script>
+    let nowChatWith = null, friends = {}, nowIsInBottom = true;
+
+    const getMessageHtml = chat=>{
+        let position  = 'left', chatUser = chat.senderDetail;
+        if(chat.sendFlag == 1 || chat.sendFlag == '1'){
+            position = 'right';
+        }
+        return `
+            <div class="chat-message message-${position}" style="opacity: 0;">
+                <img class="message-avatar img-circle" src="/static/img/teacher.png" alt="">
+                <div class="message">
+                    <a class="message-author" href="#"> ${chatUser.nickname} </a>
+                    <span class="message-date">  ${chat.createDateStr} </span>
+                    <span class="message-content">${chat.content}</span>
+                </div>
+            </div>
+        `;
+    }
+
+    const chatWith = (chatUserId,isScrollToBottom)=>{
+        nowIsInBottom = isInBottom();
+        $("#messageNum_"+chatUserId).css("display","none");
+        let chatUser =friends[chatUserId];
+        nowChatWith = chatUser;
+        $("#chatWith").html(`正在与${chatUser.nickname}聊天中...`);
+        $.ajax({
+            url: '/admin/chat/getChatData/'+chatUser.id,
+            type: 'get',
+            success: ( response )=> {
+                let messageHtml = '';
+                response.forEach(chat=>{
+                    messageHtml += getMessageHtml(chat);
+                });
+
+                $("#chat-messages").html(messageHtml);
+                resizeMessageHeight();
+                if(isScrollToBottom){
+                    scrollMessageWindowToBottom();
+                }
+            }
+        });
+    };
+
+    const getFriendHtml = friend=>{
+        let numDisplay = 'display:none;';
+        if(friend.sendMessageNumsToMe > 0){
+            numDisplay = ''
+        }
+        return `
+            <div class="chat-user">
+                <span class="pull-right label label-primary" style="${numDisplay}" id="messageNum_${friend.id}" >${friend.sendMessageNumsToMe}</span>
+                <img class="chat-avatar img-circle" src="/static/img/teacher.png" alt="">
+                <div class="chat-user-name">
+                    <a href="javascript:void(0)" onclick="chatWith('${friend.id}',true)">${friend.nickname}</a>
+                </div>
+            </div>
+        `;
+    }
+
+    const getFriendList = ()=>{
+        $.ajax({
+            url: '/admin/chat/getFriendList',
+            type: 'get',
+            success: ( response )=> {
+
+                let teacherHtml = '';
+                response.teachers.forEach(teacher=>{
+                    teacherHtml += getFriendHtml(teacher);
+                    friends[teacher.id] = teacher;
+                });
+                $("#teachers").html(teacherHtml);
+
+                let studentHtml = '';
+                response.students.forEach(student=>{
+                    studentHtml += getFriendHtml(student);
+                    friends[student.id] = student;
+                });
+                $("#students").html(studentHtml);
+            }
+        });
+    };
+
+
+    let sendChatMessage = ()=>{
+        let message = $("#message").val();
+        if(null == message || message.trim() == '' && null != nowChatWith){
+            swal({
+                title: "提示",
+                text: "信息内容不能为空！",
+                type: "error"
+            });
+        }
+        else{
+            $.ajax({
+                url: '/admin/chat/sendMessage',
+                type: 'post',
+                data:{
+                    receiver:nowChatWith.id,
+                    content:message
+                },
+                success: ( response )=> {
+                    $("#message").val('');
+                    console.log("发送成功！");
+                    let messageHtml = getMessageHtml(response);
+                    $("#chat-messages").append(messageHtml);
+                    resizeMessageHeight();
+                    scrollMessageWindowToBottom();
+                    //chatWith(nowChatWith.id);
+                }
+            });
+        }
+
+    };
+
+    let resizeMessageHeight = ()=>{
+        //重设聊天信息高度
+        $(".chat-message").each(function(ele){
+            let height = $(this).find(".message").height()+20;
+            if(height < 58) height = 58;
+            $(this).height(height);
+            $(this).css("opacity",'1');
+        }) ;
+
+    };
+
+    let scrollMessageWindowToBottom = ()=>{
+        let messageWindowHeight = $("#chat-messages").height();
+        $('#chat-messages').scrollTop($("#chat-messages").prop('scrollHeight'),messageWindowHeight);
+    };
+
+
+    let getUnReadingMessage = ()=>{
+        $.ajax({
+            url: '/admin/chat/getUnReadingMessage',
+            type: 'get',
+            success: ( response )=> {
+                let senderJson = {};
+                response.forEach(chat=>{
+                    let num = senderJson[chat.sender];
+                    if(null == num){
+                        senderJson[chat.sender] = 1;
+                    }
+                    else{
+                        senderJson[chat.sender] = senderJson[chat.sender]+1;
+                    }
+                    $("#messageNum_"+chat.sender).html(senderJson[chat.sender]);
+                    $("#messageNum_"+chat.sender).show();
+                });
+            }
+        });
+    };
+
+    let isInBottom = ()=>{
+        let windowHeight = $("#chat-messages").height();
+        let scrollHight  = $("#chat-messages").get(0).scrollHeight;
+        let scrollTop = $('#chat-messages').scrollTop();
+        if (scrollTop + windowHeight >= scrollHight-30){
+            return true;
+        }
+        else{
+            return false;
+        }
+    };
+
+    $(document).ready(function(){
+
+        getFriendList();
+
+        setInterval(()=>{
+            nowIsInBottom = isInBottom();
+            if(null != nowChatWith){
+                /*if(isInBottom() || nowIsInBottom){
+                    chatWith(nowChatWith.id,true);
+                }
+                else{
+
+                }*/
+                chatWith(nowChatWith.id,false);
+            }
+            getUnReadingMessage();
+
+        },2000)
+
+
+
+    });
+</script>
+</html>

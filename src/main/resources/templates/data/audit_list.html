@@ -1,0 +1,148 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header::public_header">
+    <meta charset="UTF-8">
+    <title>页面模板</title>
+</head>
+<body>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">首页</a>
+            </li>
+            <li class="active">
+                <strong>数据填报</strong>
+            </li>
+        </ol>
+
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+
+            <div>
+                <button class="btn btn-success" th:onclick="'location.href=\'/admin/data/audit/\''"><i class="fa fa-plus"></i>&nbsp;新增</button>
+                <p></p>
+            </div>
+
+            <table class="table table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>来源</th>
+                    <th>审核级别</th>
+                    <th>审核状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr  th:each="bean,stat : ${beans}">
+                    <td th:text="${bean.title}"></td>
+                    <td th:text="${bean.source}"></td>
+                    <td th:text="${bean.auditLevel == 2?'二级':'一级'}"></td>
+                    <td th:text="${bean.auditStatus == 'AUDIT_STATUS_WAIT'?'等待审核':
+                    bean.auditStatus == 'AUDIT_STATUS_PASS'?'审核通过':'审核拒绝'}"></td>
+
+                    <td >
+                        <a th:href="@{'/admin/data/audit/' + ${bean.id}}" class="btn btn-info" >预览</a>
+                        <button class="btn btn-success" th:onclick="'passAudit(\'' + ${bean.id} + '\')'">通过</button>
+                        <button class="btn btn-danger" th:onclick="'rejectAudit(\''+ ${bean.id} + '\')'">拒绝</button>
+                       <!-- <a th:href="@{'/admin/data/audit/' + ${bean.id}}" class="btn btn-info" >编辑</a>
+                        <button class="btn btn-danger" th:onclick="'deleteInfo(\''+'/admin/data/audit/' + ${bean.id} + '\')'">删除</button>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="pull-right" th:include="common/pagination::pagination"
+                 th:with="url='/admin/data/audit/list/',pages=${beans.pageNum}, totalPages=${beans.pages}, pageSize=${beans.pageSize}"> </div>
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="audit_hidden_message" th:value="${msg}">
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+
+<script type="text/javascript">
+
+    function passAudit(id) {
+
+        swal({
+            title: '审核',
+            text: '确认通过该审核？',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '审核',
+            showLoaderOnConfirm: true,
+            preConfirm: function () {
+                return new Promise(function (resolve, reject) {
+                    $.post("/admin/data/audit/pass", {id:id}, function (data) {
+                        if(data.code == 100){
+                            resolve();
+                        }else {
+                            reject(data.msg);
+                        }
+                    }).fail(function(response) {
+                        reject('系统错误');
+                    });
+
+                })
+            },
+            allowOutsideClick: false
+        }).then(function (email) {
+            swal(
+                '成功!',
+                '该信息已成功通过审核',
+                'success'
+            )
+        }).catch(swal.noop);
+    }
+
+
+    function rejectAudit(id) {
+
+        swal({
+            title: '拒绝',
+            text: '请输入拒绝原因',
+            input: 'text',
+            showCancelButton: true,
+            confirmButtonText: '提交',
+            showLoaderOnConfirm: true,
+            preConfirm: function (text) {
+                return new Promise(function (resolve, reject) {
+                    $.post("/admin/data/audit/reject", {id:id, reason:text}, function (data) {
+                        if(data.code == 100){
+                            resolve();
+                        }else {
+                            reject(data.msg);
+                        }
+                    }).fail(function(response) {
+                        reject('系统错误');
+                    });
+
+                })
+            },
+            allowOutsideClick: false
+        }).then(function () {
+            swal(
+                '成功!',
+                '该信息已成功退回',
+                'success'
+            )
+        }).catch(swal.noop);
+    }
+
+</script>
+
+</body>
+</html>

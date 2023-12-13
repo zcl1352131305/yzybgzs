@@ -1,0 +1,38 @@
+
+# 开发环境配置
+# 数据库配置
+spring:
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
+  mvc:
+    static-path-pattern: /static/**
+# 日志配置
+logging:
+  level:
+    cn.com.softvan.audit: debug
+server:
+  port: 8082
+
+# 系统配置
+audit:
+  upload:
+    root-path: F:/home/softvan/data_sys_file_cmwx/upload
+    web-path: /file
+
+
+
+#最大连接数
+http:
+  maxTotal: 100
+  defaultMaxPerRoute: 20
+  connectTimeout: 1000
+  connectionRequestTimeout: 500
+  socketTimeout: 1000
+  staleConnectionCheckEnabled: true
+
+svn:
+  repository:
+    url: svn://localhost:3690/
+    userName: zouchaoliang
+    password: 111111

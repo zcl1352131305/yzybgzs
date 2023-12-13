@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.softvan.mapper.data.DataFileMapper">
+    <resultMap id="BaseResultMap" type="cn.com.softvan.entity.data.DataFile">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="info_id" jdbcType="VARCHAR" property="infoId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="size" jdbcType="INTEGER" property="size" />
+        <result column="path" jdbcType="VARCHAR" property="path" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="keyword" jdbcType="VARCHAR" property="keyword" />
+        <result column="suffix" jdbcType="VARCHAR" property="suffix" />
+        <result column="sort" jdbcType="INTEGER" property="sort" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    </resultMap>
+    <select id="findbyInfoid"  parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        t1.*
+        from  t_data_file t1
+        where t1.info_id = #{infoId}
+    </select>
+
+    <select id="findbyInfoidAndKeyword"  parameterType="cn.com.softvan.entity.data.DataFile" resultMap="BaseResultMap" >
+        select
+        t1.*
+        from  t_data_file t1
+        where t1.info_id = #{infoId}
+        and t1.keyword = #{keyword}
+    </select>
+
+
+
+</mapper>

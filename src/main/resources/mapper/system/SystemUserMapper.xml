@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.softvan.mapper.system.SystemUserMapper">
+  <resultMap id="BaseResultMap" type="cn.com.softvan.entity.system.SystemUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="workid" jdbcType="VARCHAR" property="workid" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="clazz" jdbcType="VARCHAR" property="clazz" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="locked" jdbcType="BIT" property="locked" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="job_title" jdbcType="VARCHAR" property="jobTitle" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+  </resultMap>
+
+  <select id="selectUsersByRole" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select t1. * from t_system_user t1
+    INNER JOIN t_system_user_role t2 on t1.id = t2.user_id
+    where t2.role_id = #{roleId}
+  </select>
+
+</mapper>

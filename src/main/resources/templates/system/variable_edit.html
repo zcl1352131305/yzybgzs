@@ -1,0 +1,73 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header::public_header">
+    <meta charset="UTF-8">
+    <title>页面模板</title>
+</head>
+<body>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">首页</a>
+            </li>
+            <li >
+                <a href="/admin/system/variable/list/1">数据字典</a>
+            </li>
+            <li class="active">
+                <strong>编辑</strong>
+            </li>
+        </ol>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+
+            <!--表单容器-->
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <form method="post" action="/admin/system/variable">
+                            <input type="hidden" th:value="${bean.id}" name="id">
+
+                            <div class="form-group">
+                                <label for="bean_parentId">父级</label>
+                                <select class="form-control" id="bean_parentId" name="parentId" >
+                                    <option value="0">顶级</option>
+                                    <option th:each="variable:${pBean}"
+                                            th:value="${variable.id}" th:text="${variable.name}"
+                                            th:selected="${variable.id == bean.parentId}"></option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bean_name">名称</label><input type="text" class="form-control" id="bean_name" name="name" th:value="${bean.name}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="bean_code">编码</label><input type="text" class="form-control" id="bean_code" name="code" th:value="${bean.code}"/>
+                            </div>
+
+                           <button type="submit" class="btn btn-success">提交</button>
+                            <a class="btn btn-info" href="/admin/system/variable/list/1">返回</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--表单容器结束-->
+
+        </div>
+    </div>
+</div>
+
+
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+
+</body>
+</html>

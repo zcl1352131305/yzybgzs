@@ -1,0 +1,128 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header::public_header">
+    <meta charset="UTF-8">
+    <title>数据编辑页面</title>
+</head>
+<body>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">首页</a>
+            </li>
+            <li >
+                <a href="/admin/system/organization/list/1">组织机构</a>
+            </li>
+            <li class="active">
+                <strong>编辑</strong>
+            </li>
+        </ol>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+
+            <!--表单容器-->
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+
+                        <form method="post" action="/admin/system/organization">
+                            <input type="hidden" th:value="${bean.id}" name="id">
+
+                            <div id="dropzone_area"></div>
+
+
+                            <div class="form-group">
+                                <label for="bean_name">组织名</label><input type="text" class="form-control" id="bean_name" name="name" th:value="${bean.name}" />
+                            </div>
+
+                            <!--<div class="form-group">
+                                <label for="bean_level">层级</label><input type="text" class="form-control" id="bean_level" name="level" th:value="${bean.level}" />
+                            </div>-->
+
+                            <div class="form-group">
+                                <label for="bean_parentId">父级</label>
+                                <select class="form-control" id="bean_parentId" name="parentId" >
+                                    <option value="0">顶级</option>
+                                    <option th:each="variable:${pBean}"
+                                            th:value="${variable.id}" th:text="${variable.name}"
+                                            th:selected="${variable.id == bean.parentId}"></option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bean_parentId">父级</label>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-5"> <ul id="orgTree" class="ztree"></ul></div>
+
+                                </div>
+                            </div>
+
+                           <!-- <div class="form-group">
+                                <label for="bean_available">是否可用</label><input type="text" class="form-control" id="bean_available" name="available" th:value="${bean.available}" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bean_type">类型</label><input type="text" class="form-control" id="bean_type" name="type" th:value="${bean.type}" />
+                            </div>-->
+
+
+
+
+
+                            <button type="submit" class="btn btn-success">提交</button>
+                            <a class="btn btn-info" href="/admin/system/organization/list/1">返回</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--表单容器结束-->
+
+        </div>
+    </div>
+</div>
+
+
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+<script src="https://cdn.bootcss.com/zTree.v3/3.5.29/js/jquery.ztree.all.min.js"></script>
+<link href="https://cdn.bootcss.com/zTree.v3/3.5.29/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet">
+<link href="https://cdn.bootcss.com/zTree.v3/3.5.29/css/metroStyle/metroStyle.min.css" rel="stylesheet">
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        //加载结构树
+        $.get('/admin/system/organization/tree', function (data) {
+            var setting = {
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pId"
+                    }
+                },
+                check:{
+                    enable: true,
+                    chkStyle: "radio"
+                }
+
+            };
+            treeObj = $.fn.zTree.init($("#orgTree"), setting, data.data);
+        })
+
+
+    });
+
+</script>
+</body>
+</html>

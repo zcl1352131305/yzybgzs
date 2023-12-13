@@ -1,0 +1,101 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传模板</title>
+</head>
+<body>
+
+<div th:fragment="upload_template">
+    <!--dropzone js and css-->
+    <link href="https://cdn.bootcss.com/dropzone/5.1.1/min/dropzone.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/dropzone/5.1.0/min/basic.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/dropzone/5.1.1/min/dropzone.min.js"></script>
+
+    <form id="myAwesomeDropzone" th:action="'/common/file/upload/'+${uploadType}+'?keyword='+${uploadKey}" class="dropzone">
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+        </div>
+    </form>
+    
+    <input type="hidden" th:value="${uploadKey}" id="uploadKey">
+    <input type="hidden" th:value="${uploadInfoId}" id="uploadInfoId">
+    <br>
+
+<script th:inline="javascript">
+    Dropzone.options.myAwesomeDropzone = {
+        addRemoveLinks: true,
+        dictRemoveFile: "移除",
+        dictCancelUpload: "取消",
+        dictCancelUploadConfirmation: "确认取消？",
+        init: function() {
+            this.on("success", function(file, event) {
+
+                file.id = event.data.id;
+                $("#dropzone_area").append("<input type='hidden' id='dp"+event.data.id+"' name='"+[[${uploadKey}]]+
+                    "' value='"+event.data.id+"' />");
+            });
+            this.on("removedfile", function (file) {
+
+                $.ajax({
+                    type: 'delete',
+                    url: '/data/file/'+file.id,
+                    success: function (data) {
+                        $("#dp"+file.id).remove();
+                    }
+
+                })
+            });
+            initSavedFile(this);
+        }
+    };
+
+    /**
+     * 加载已保存文件
+     */
+    function initSavedFile(dropZone) {
+        //var uploadKey = $("#uploadKey").val();
+       // var uploadInfoId = $("#uploadInfoId").val();
+        var uploadKey = [[${uploadKey}]];
+        var uploadInfoId = [[${uploadInfoId}]];
+        if(uploadKey && uploadInfoId && uploadKey != '' && uploadInfoId != ''){
+            //查询保存的文件
+            $.get("/data/file/list/"+uploadKey+"/"+uploadInfoId, function (data) {
+                try{
+                    //data = JSON.parse(data);
+                    var files = data.data;
+                    if(files && files.length>0){
+                        $.each(files, function (i, file) {
+                            $("#dropzone_area").append("<input type='hidden' id='dp"+file.id+"' name='"+file.keyword+
+                                "' value='"+file.id+"' />");
+
+                            var mockFile = { name: file.name, size: file.size, id:file.id};
+
+                            dropZone.options.addedfile.call(dropZone, mockFile);
+                            if(file.type == 'image'){
+                                dropZone.options.thumbnail.call(dropZone, mockFile, file.path);
+                            }
+                            mockFile.previewElement.classList.add('dz-success');
+                            mockFile.previewElement.classList.add('dz-complete');
+
+                        })
+                    }
+
+                }catch (e){
+                    console.log("初始化已上传文件失败");
+                    console.log(e);
+                }
+
+
+            })
+            
+            
+        }
+        
+    }
+</script>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>数据编辑页面</title>
+    <div th:include="common/header::public_header"></div>
+    <link href="/static/css/plugins/iCheck/custom.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">首页</a>
+            </li>
+            <li>
+                <a th:href="'/admin/tech/course/list/1'">课程管理</a>
+            </li>
+            <li>
+                <a th:href="'/admin/tech/courseWork/workList/1?courseId='+${bean.courseId}">作业管理</a>
+            </li>
+            <li class="active">
+                <strong>编辑</strong>
+            </li>
+        </ol>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+
+            <!--表单容器-->
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">作业文件（默认最后一个文件）</label>
+                            <div class="col-sm-10">
+                                <div th:include="common/upload_template::upload_template" th:with="uploadType='file',uploadKey='courseWorkFiles',uploadInfoId=${bean.id}"></div>
+                            </div>
+                        </div>
+
+
+                        <form th:method="${bean.id == null?'post':'put'}" id="form_data" action="/admin/tech/courseWork/saveUpdate" class="form-horizontal">
+                            <input type="hidden" th:value="${bean.id}" id="bean_id" name="id">
+                            <input type="hidden" th:value="${bean.courseId}" id="courseId" name="courseId">
+                            <div id="dropzone_area"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="name" name="name" th:value="${bean.name}"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">分数</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="score" name="score" th:value="${bean.score}"/>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">截止日期</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="date_limit" name="dateLimit" th:value="${bean.dateLimit}"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button type="submit" id="submit_btn" class="btn btn-success">提交</button>
+                                    <a class="btn btn-info" th:href="'/admin/tech/courseWork/workList/1?courseId='+${bean.courseId}">返回</a>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--表单容器结束-->
+
+        </div>
+    </div>
+</div>
+
+
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+
+
+<script src="https://cdn.bootcss.com/iCheck/1.0.2/icheck.min.js"></script>
+<link href="https://cdn.bootcss.com/iCheck/1.0.2/skins/all.css" rel="stylesheet">
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[name="roleIds"]').iCheck({
+            checkboxClass: 'icheckbox_flat-green'
+        });
+        $('[name="operateTypes"]').iCheck({
+            checkboxClass: 'icheckbox_flat-red'
+        })
+    });
+
+</script>
+</body>
+</html>

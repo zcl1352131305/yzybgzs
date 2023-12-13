@@ -1,0 +1,72 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header::public_header">
+    <meta charset="UTF-8">
+    <title>页面模板</title>
+</head>
+<body>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">首页</a>
+            </li>
+            <li class="active">
+                <strong>权限配置</strong>
+            </li>
+        </ol>
+
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+
+            <div>
+                <button class="btn btn-success" th:onclick="'location.href=\'/admin/system/permit/customize\''"><i class="fa fa-plus"></i>&nbsp;新增</button>
+                <p></p>
+            </div>
+
+            <table class="table table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>类型</th>
+                    <th>地址</th>
+                    <th>权限字符</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr  th:each="bean,stat : ${pageInfo.list}">
+                    <td th:text="${bean.name}"></td>
+                    <td th:text="${bean.type}"></td>
+                    <td th:text="${bean.url}"></td>
+                    <td th:text="${bean.permission}"></td>
+                    <td >
+                        <a th:href="@{'/admin/system/permit/customize/' + ${bean.id}}" class="btn btn-info" >编辑</a>
+                        <button class="btn btn-danger" th:onclick="'deleteInfo(\''+'/admin/system/permit/' + ${bean.id} + '\')'">删除</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="pull-right" th:include="common/pagination::pagination"
+                 th:with="url='/admin/system/permit/list/',pages=${pageInfo.pageNum}, totalPages=${pageInfo.pages}, pageSize=${pageInfo.pageSize}"> </div>
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="audit_hidden_message" th:value="${msg}">
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+
+</body>
+</html>

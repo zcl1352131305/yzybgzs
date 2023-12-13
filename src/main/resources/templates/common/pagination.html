@@ -1,0 +1,43 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>分页模板</title>
+</head>
+<body>
+
+<div th:fragment="pagination" >
+    <div th:if="${totalPages > 0}" class="btn-group" th:with="pageStart=(${pages} + 5>${totalPages}?${totalPages}-9:${pages}-4),
+pageEnd=(${pages}-4<1?10:${pages}+5), rps=(${pageStart}>0?${pageStart}:1), rpe=(${pageEnd}<=${totalPages}?${pageEnd}:${totalPages})">
+        <button type="button" class="btn btn-white" th:if="${pages==1}"><i class="fa fa-chevron-left"></i>
+        </button>
+
+        <button type="button" class="btn btn-white" th:if="${pages!=1}"
+                th:onclick="'location.href=(\''+ ${url} + ${pages-1} + '?size=' + ${pageSize} + ${otherParam == null?'':otherParam} + '\')'"><i class="fa fa-chevron-left"></i>
+        </button>
+
+
+        <th:block  th:each="pageNo : ${#numbers.sequence(rps, rpe )}">
+        <button class="btn btn-primary active" th:if="${pages eq pageNo}" th:text="${pages}"></button>
+        <button class="btn btn-white " th:if="${not (pages eq pageNo)}"
+                th:onclick="'location.href=(\''+ ${url} + ${pageNo} + '?size=' + ${pageSize} + ${otherParam == null?'':otherParam} + '\')'"
+                th:text="${pageNo}"></button>
+
+        </th:block>
+
+
+        <button type="button" class="btn btn-white" th:if="${pages==totalPages}"><i class="fa fa-chevron-right"></i>
+        </button>
+        <button type="button" class="btn btn-white" th:if="${pages!=totalPages}"
+                th:onclick="'location.href=(\''+ ${url} + ${pages+1} + '?size=' + ${pageSize} + ${otherParam == null?'':otherParam} + '\')'"><i class="fa fa-chevron-right"></i>
+        </button>
+    </div>
+    <p></p><p></p>
+</div>
+
+
+
+
+</body>
+</html>

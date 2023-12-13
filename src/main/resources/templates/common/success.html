@@ -1,0 +1,20 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header::public_header">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div class="alert alert-success" role="alert">
+        <h4>
+            成功!
+        </h4> <strong th:text="${msg}"></strong><a th:href="@{${url}}" class="alert-link">2s后自动跳转</a>
+
+    </div>
+
+    <script th:inline="javascript">
+        setTimeout("location.href=[[@{${url}}]]", 2000);
+    </script>
+</body>
+</html>

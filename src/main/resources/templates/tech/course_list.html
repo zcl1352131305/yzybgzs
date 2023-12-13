@@ -1,0 +1,83 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header::public_header">
+    <meta charset="UTF-8">
+    <title>页面模板</title>
+</head>
+<body>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">首页</a>
+            </li>
+            <li class="active">
+                <strong>课程管理</strong>
+            </li>
+        </ol>
+
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+
+            <div>
+                <button class="btn btn-success" th:onclick="'location.href=\'/admin/tech/course/\''"><i class="fa fa-plus"></i>&nbsp;新增</button>
+                <p></p>
+            </div>
+
+            <table class="table table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>编码</th>
+                    <th>分值</th>
+                    <th>年级</th>
+                    <th>班级</th>
+                    <th>专业</th>
+                    <th>学生数</th>
+                    <th>作业数</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr  th:each="bean,stat : ${pageInfo.list}">
+                    <td th:text="${bean.name}"></td>
+                    <td th:text="${bean.code}"></td>
+                    <td th:text="${bean.score}"></td>
+                    <td th:text="${bean.grade}"></td>
+                    <td th:text="${bean.clazz}"></td>
+                    <td th:text="${bean.profession}"></td>
+                    <td th:text="${bean.studentCount}"></td>
+                    <td th:text="${bean.workCount}"></td>
+                    <td >
+                        <a th:href="@{'/admin/tech/course/' + ${bean.id}}" class="btn btn-info btn-sm" >编辑</a>
+                        <a th:href="@{'/admin/tech/course/editStudent/' + ${bean.id}}" class="btn btn-info btn-sm" >导入学生</a>
+                        <a th:href="${'/admin/tech/courseWork/workList/1?courseId='+bean.id}" class="btn btn-info btn-sm" >作业管理</a>
+                        <a th:href="${'/admin/tech/courseVideo/videoList/1?courseId='+bean.id}" class="btn btn-info btn-sm" >视频管理</a>
+                        <button class="btn btn-danger btn-sm" th:onclick="'deleteInfo(\''+'/admin/tech/course/' + ${bean.id} + '\')'">删除</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+          <div class="pull-right" th:include="common/pagination::pagination"
+                 th:with="url='/admin/tech/course/list/',pages=${pageInfo.pageNum}, totalPages=${pageInfo.pages}, pageSize=${pageInfo.pageSize}"> </div>
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="audit_hidden_message" th:value="${msg}">
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+
+</body>
+</html>

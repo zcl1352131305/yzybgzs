@@ -1,0 +1,85 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header::public_header">
+    <meta charset="UTF-8">
+    <title>页面模板</title>
+</head>
+<body>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">首页</a>
+            </li>
+            <li>
+                <a th:href="'/admin/tech/student/course/list/1?courseId='+${courseId}">我的课程</a>
+            </li>
+            <li class="active">
+                <strong>课程作业</strong>
+            </li>
+        </ol>
+
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+
+            <div>
+                <p></p>
+            </div>
+
+            <table class="table table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>分数</th>
+                    <th>截止日期</th>
+                    <th>作业原件</th>
+                    <th>我提交的</th>
+                    <th>批改后的</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr  th:each="bean,stat : ${pageInfo.list}">
+                    <td th:text="${bean.name}"></td>
+                    <td th:text="${bean.score}"></td>
+                    <td th:text="${bean.dateLimit}"></td>
+                    <td><a th:if="${null != bean.file}" th:href="${bean.file.path}" th:attr="download=${bean.file.name}" th:text="${null != bean.file.name?'下载':''}" ></a></td>
+                    <td><a th:if="${null != bean.studentWork && null != bean.studentWork.submitFile}"  th:href="${bean.studentWork.submitFile.path}" th:attr="download=${bean.studentWork.submitFile.name}"  th:text="${null != bean.studentWork.submitFile.name?'下载':''}" ></a></td>
+                    <td><a th:if="${null != bean.studentWork && null != bean.studentWork.checkedFile}"  th:href="${bean.studentWork.checkedFile.path}" th:attr="download=${bean.studentWork.checkedFile.name}"  th:text="${null != bean.studentWork.checkedFile.name?'下载':''}" >下</a></td>
+                    <td>
+                        <span th:if="${null != bean.studentWork.checkedFile.name}">已批改</span>
+                        <span th:if="${null == bean.studentWork.checkedFile.name && bean.workClose}">已到截止日期</span>
+                        <span th:if="${null == bean.studentWork.checkedFile.name && null == bean.studentWork.submitFile.name && !bean.workClose}">未提交</span>
+                        <span th:if="${null == bean.studentWork.checkedFile.name && null != bean.studentWork.submitFile.name && !bean.workClose}">未批改</span>
+                    </td>
+                    <td >
+                        <a th:if="${!bean.workClose && null == bean.studentWork.checkedFile.name }" th:href="@{'/admin/tech/student/courseWork/submitEdit/' + ${bean.id}+'?courseId='+${courseId}}" class="btn btn-info btn-sm" >提交作业</a>
+                        <!--<a th:if="${null != bean.studentWork.checkedFile.name}" class="btn btn-default btn-sm" disabled >已批改</a>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="pull-right" th:include="common/pagination::pagination"
+                 th:with="url='/admin/tech/student/courseWork/workList/',pages=${pageInfo.pageNum}, totalPages=${pageInfo.pages}, pageSize=${pageInfo.pageSize}, otherParam='&courseId='+${courseId}"> </div>
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="audit_hidden_message" th:value="${msg}">
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+
+</body>
+</html>

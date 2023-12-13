@@ -1,0 +1,106 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head >
+    <meta charset="UTF-8">
+    <title>页面模板</title>
+    <div th:include="common/header::public_header"></div>
+    <style>
+        .describe{
+            overflow : hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">首页</a>
+            </li>
+            <li>
+                <a th:href="'/admin/tech/student/course/list/1?courseId='+${courseId}">我的课程</a>
+            </li>
+            <li class="active">
+                <strong>课程视频</strong>
+            </li>
+        </ol>
+
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="col-sm-4" th:each="bean,stat : ${pageInfo.list}">
+            <div class="contact-box">
+                <a th:href="@{'/admin/tech/student/courseVideo/view/' + ${bean.id}+'?courseId='+${courseId}}" >
+                    <div class="col-sm-4">
+                        <div class="text-center">
+                            <img alt="image" class="m-t-xs img-responsive" th:src="${null == bean.headImgFile.path?'/static/img/firm.png':bean.headImgFile.path}" onerror="$(this).attr('src','/static/img/firm.png')">
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3><strong th:text="${bean.name}"></strong></h3>
+                        <div style="height: 60px;overflow-y: hidden">
+                            <p class="describe" th:text="${bean.detailInfo}"></p>
+                        </div>
+                        <small th:text="'当前进度：'+${bean.studentWatched.progress}+'%'"></small>
+                        <div class="progress progress-mini">
+                            <div th:style="'width: '+${bean.studentWatched.progress}+'%;'" class="progress-bar"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+
+            <div class="pull-right" th:include="common/pagination::pagination" th:with="url='/admin/tech/courseVideo/videoList/',pages=${pageInfo.pageNum}, totalPages=${pageInfo.pages}, pageSize=${pageInfo.pageSize}, otherParam='&courseId='+${courseId}"> </div>
+
+            <!--<div class="wrapper wrapper-content">
+
+                <div>
+                    <p></p>
+                </div>
+
+                <table class="table table-bordered table-hover ">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr  th:each="bean,stat : ${pageInfo.list}">
+                        <td th:text="${bean.name}"></td>
+
+                        <td >
+                            <a th:href="@{'/admin/tech/student/courseVideo/view/' + ${bean.id}+'?courseId='+${courseId}}" class="btn btn-info btn-sm" >提交作业</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+
+            </div>-->
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="audit_hidden_message" th:value="${msg}">
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+
+</body>
+</html>

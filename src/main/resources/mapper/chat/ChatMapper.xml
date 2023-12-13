@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.softvan.mapper.chat.ChatMapper">
+  <resultMap id="BaseResultMap" type="cn.com.softvan.entity.chat.Chat">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sender" jdbcType="INTEGER" property="sender" />
+    <result column="receiver" jdbcType="INTEGER" property="receiver" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="is_reading" jdbcType="VARCHAR" property="isReading" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+  </resultMap>
+
+  <select id="selectChatWithPeople" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select * from t_chat where (sender = ${usr1} and receiver = ${usr2} ) or (sender = ${usr2} and receiver = ${usr1} ) order by create_date asc
+  </select>
+
+</mapper>

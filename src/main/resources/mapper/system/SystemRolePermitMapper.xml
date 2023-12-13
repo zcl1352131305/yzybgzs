@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.softvan.mapper.system.SystemRolePermitMapper">
+  <resultMap id="BaseResultMap" type="cn.com.softvan.entity.system.SystemRolePermit">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="permit_id" jdbcType="VARCHAR" property="permitId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+  </resultMap>
+
+  <delete id="deleteByRoleId" parameterType="java.lang.Integer">
+    delete from t_system_role_permit where role_id = #{roleId}
+  </delete>
+
+</mapper>

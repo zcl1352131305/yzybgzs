@@ -1,0 +1,165 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/header::public_header">
+    <meta charset="UTF-8">
+    <title>数据编辑页面</title>
+</head>
+<body>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <br>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/index">首页</a>
+            </li>
+            <li>
+                <a href="/admin/system/role/list/1">角色管理</a>
+            </li>
+            <li class="active">
+                <strong>编辑</strong>
+            </li>
+        </ol>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+
+            <!--表单容器-->
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+
+                        <form th:method="${bean.id == null?'post':'put'}"  action="/admin/system/role" id="form_data">
+                            <input type="hidden" th:value="${bean.id}" name="id" id="bean_id">
+
+                            <div id="dropzone_area"></div>
+
+                            <div class="form-group">
+                                <label for="bean_roleName">角色名</label><input type="text" class="form-control"
+                                                                             id="bean_roleName" name="roleName"
+                                                                             th:value="${bean.roleName}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bean_roleType">角色类型</label><input type="text" class="form-control"
+                                                                              id="bean_roleType" name="roleType"
+                                                                              th:value="${bean.roleType}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bean_available">是否可用</label>
+                                <select class="form-control" name="available" id="bean_available">
+                                    <option value="1" th:selected="${bean.available == '1'}">是</option>
+                                    <option value="0" th:selected="${bean.available == '0'}">否</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bean_description">描述</label><input type="text" class="form-control"
+                                                                               id="bean_description" name="description"
+                                                                               th:value="${bean.description}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>权限</label>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-5"> <ul id="permitTree" class="ztree"></ul></div>
+
+                                </div>
+                            </div>
+                            <div id="permits">
+
+
+                            </div>
+
+
+                            <button type="button" id="submit_btn" class="btn btn-success">提交</button>
+                            <a class="btn btn-info" href="/admin/system/role/list/1">返回</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--表单容器结束-->
+
+        </div>
+    </div>
+</div>
+
+
+<!--页面js-->
+<div th:include="common/header::common_javascript">
+</div>
+<script src="https://cdn.bootcss.com/zTree.v3/3.5.29/js/jquery.ztree.all.min.js"></script>
+<link href="https://cdn.bootcss.com/zTree.v3/3.5.29/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet">
+<link href="https://cdn.bootcss.com/zTree.v3/3.5.29/css/metroStyle/metroStyle.min.css" rel="stylesheet">
+<script type="text/javascript">
+    var treeObj;
+    $(document).ready(function () {
+        //初始化权限树
+        var roleId = $("#bean_id").val()?$("#bean_id").val():"init";
+        $.get("/admin/system/role/permit/tree/"+roleId, function (data) {
+            if(data.code == 100){
+                var setting = {
+                    data: {
+                        simpleData: {
+                            enable: true,
+                            idKey: "id",
+                            pIdKey: "pId",
+                            rootPId: 0
+                        }
+                    },
+                    check:{
+                        enable: true
+                    }
+
+                };
+                treeObj = $.fn.zTree.init($("#permitTree"), setting, data.data.tree);
+                //已选中节点值放入表单
+                appendCheckedNodesToForm(data.data.checked, "permits");
+                //初始化已选中节点
+               /* $.each(data.data.checked, function (index, value) {
+                    var node = treeObj.getNodeByParam("id", value, null);
+                    treeObj.checkNode(node, true, true);
+                    treeObj.updateNode(node);
+                })*/
+            }
+
+        })
+
+        $("#submit_btn").click(function () {
+            initSelectedNode();
+            $("#form_data").submit();
+        })
+
+    });
+    
+    function initSelectedNode() {
+        var nodes = treeObj.getNodesByFilter(findCheckedNodesFilter);
+        appendCheckedNodesToForm(nodes, "permits");
+    }
+
+    function findCheckedNodesFilter(node){
+        return node.checked;
+    }
+
+    //监听提交事件
+
+
+    function appendCheckedNodesToForm(nodes, id) {
+        $("#"+id).html("");
+        if(nodes){
+            $.each(nodes, function (i,val) {
+                permitsId = (typeof val=='string')&&val.constructor==String?val:val.id;
+                $("#"+id).append("<input type='hidden' value='"+permitsId+"' name='permits'/>");
+            })
+        }
+    }
+
+</script>
+</body>
+</html>
