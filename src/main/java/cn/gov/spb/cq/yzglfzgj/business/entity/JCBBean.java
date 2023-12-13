@@ -1,13 +1,11 @@
 package cn.gov.spb.cq.yzglfzgj.business.entity;
 
-import cn.gov.spb.cq.yzglfzgj.utils.SVNUtil;
 import com.grapecity.documents.excel.IRange;
 import com.grapecity.documents.excel.IWorksheet;
 import com.grapecity.documents.excel.Workbook;
 import lombok.Data;
 import org.apache.log4j.Logger;
 
-import java.util.Arrays;
 import java.util.List;
 @Data
 public class JCBBean {

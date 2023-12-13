@@ -460,7 +460,7 @@ body.canvas-menu.mini-navbar .footer {
 body.fixed-sidebar .navbar-static-side,
 body.canvas-menu .navbar-static-side {
     position: fixed;
-    width: 220px;
+    width: 200px;
     z-index: 2001;
     height: 100%;
 }
@@ -3525,7 +3525,7 @@ video {
 #page-wrapper {
     padding: 0 15px;
     position: inherit;
-    margin: 0 0 0 220px;
+    margin: 0 0 0 200px;
 }
 
 .title-action {
@@ -7047,7 +7047,7 @@ body.rtls.body-small.fixed-sidebar.mini-navbar #page-wrapper {
 }
 
 body.rtls.body-small.fixed-sidebar.mini-navbar .navbar-static-side {
-    width: 220px;
+    width: 200px;
 }
 
 .body-small.rtls .navbar-fixed-top {
@@ -7095,7 +7095,7 @@ body.rtls.top-navigation .footer.fixed {
         display: none;
         z-index: 2001;
         position: fixed;
-        width: 220px;
+        width: 200px;
     }
     .rtls.fixed-sidebar.body-small.mini-navbar .navbar-static-side {
         display: block;

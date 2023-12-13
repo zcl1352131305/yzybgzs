@@ -1,8 +1,9 @@
 .yz-border-white{
     border-color: #fff !important;
 }
+
 .yz-fontsize-15{
-    font-size: 18px;
+    font-size: 15px;
 }
 .yz-fontsize-10{
     font-size: 12px;
@@ -16,3 +17,6 @@
 .panel-gray{border-color:#c2c2c2}
 .panel-gray>.panel-heading{color:#333;background-color:#c2c2c2;border-color:#c2c2c2}
 .panel-gray>.panel-heading+.panel-collapse>
+
+
+

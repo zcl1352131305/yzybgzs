@@ -29,12 +29,16 @@ public class BusinessController {
 
     @GetMapping
     public ModelAndView index() throws SVNException {
-        Workbook workbook = new Workbook();
+        /*Workbook workbook = new Workbook();
         workbook.open(new ByteArrayInputStream(SVNUtil.getSvnFile("行政执法工作台账.xlsx").toByteArray()));
-        JCBBean.getJCBDatas(workbook);
-        //IWorksheet sheet1 = workbook.getWorksheets().get(0);
-        //String[][] values = (String[][]) sheet1.get.getValue();
+        JCBBean.getJCBDatas(workbook);*/
         return new ModelAndView("business/index");
+    }
+
+    @GetMapping("/home")
+    public ModelAndView home() throws SVNException {
+
+        return new ModelAndView("business/home_page");
     }
 
 
